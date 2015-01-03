@@ -13,11 +13,12 @@
     - [`cp` 复制文件](#sec-2-3-3)
     - [`mv` 移动文件](#sec-2-3-4)
     - [`rm` 删除文件](#sec-2-3-5)
-    - [环境变量 `path`](#sec-2-3-6)
+  - [环境变量 `path`](#sec-2-4)
+- [参考资料](#sec-3)
 
 # Introduction<a id="sec-1" name="sec-1"></a>
 
-这篇教程会讲解一些计算机基本工具的使用。
+这篇教程会讲解一个计算机基本工具的使用。
 
 # 命令行<a id="sec-2" name="sec-2"></a>
 
@@ -50,7 +51,7 @@ Note: Linux用户不在教程考虑范围，因为能使用Linux的同学基本不需要看这篇教程了，不
 
     C:\Users\Sorrow17>_
 
-之前这个目录名对我们使用cmd很关键，这个目录名的正统名称为 **“working directory“** （工作目录）。通常来说，一个directory（目录）在windows系统当中由一个字符串表示，格式为 `盘符（在哪个盘）：（冒号）\（反斜杠）一级目录\二级目录\...` , 举个例子来讲，我将Firefox浏览器安装在了D盘，那么这个安装目录就是 `D:\Mozilla Firefox\` 。相似的，Firefox的运行文件路径即为 `D:\Mozilla Firefox\Firefox.exe` 。回到 working directory的问题，如果我们把cmd看成是一个打开的“资源管理器”，那么这个working directory就是我们当前 <span class="underline">在资源管理器当中能够看到的那一层目录</span> 。如果你使用的是 `win+r` 然后输入cmd的快捷键组合来打开cmd，那么出现的目录名字就应该是 `C:\Users\你的用户名` 这个目录，以下假设我们教程当中的系统用户名是john。
+之前这个目录名对我们使用cmd很关键，这个目录名的正统名称为 **“working directory“** （工作目录）。通常来说，一个directory（目录）在windows系统当中由一个字符串表示，格式为 `盘符（在哪个盘）：（冒号）\（反斜杠）一级目录\二级目录\...` , 举个例子来讲，我将Firefox浏览器安装在了D盘，那么这个安装目录就是 `D:\Mozilla Firefox\` 。相似的，Firefox的运行文件路径即为 `D:\Mozilla Firefox\Firefox.exe` 。回到 working directory的问题，如果我们把cmd看成是一个打开的“资源管理器”，那么这个working directory就是我们当前 <span class="underline">在资源管理器当中能够看到的那一层目录</span> 。如果你使用的是 `win+r` 然后输入cmd的快捷键组合来打开cmd，那么出现的目录名字就应该是 `C:\Users\你的用户名` 这个目录，以下假设我们教程当中的系统用户名是 <span class="underline">john</span> 。
 
 ### 绝对路径和相对路径<a id="sec-2-1-2" name="sec-2-1-2"></a>
 
@@ -135,13 +136,13 @@ C:\Users\john>dir
                    3 File(s)          9,306 bytes
                   24 Dir(s)  66,317,733,888 bytes free
 
-注意: 这个”文件列表”的前两行有两个文件名分别为 `.` 和 `..` 的目录，这两个文件夹分别指向当前的目录（ `C:\Users\john\` ）和当前目录的上一层目录（ `C:\Users\` ）。
+Note: 这个”文件列表”的前两行有两个文件名分别为 `.` 和 `..` 的目录，这两个文件夹分别指向当前的目录（ `C:\Users\john\` ）和当前目录的上一层目录（ `C:\Users\` ）。
 
 当然，只能查看当前的文件夹里面有什么文件是远远不够的，我们还需要查看其他文件夹的文件的内容，所以这个时候我们应该在 `dir` 命令后面加入一个“参数”来表达我们到底想要查看哪一个目录的内容，具体而言，如果我们想要查看C盘根目录里面的内容，我们可以键入以下的命令：
 
     C:\Users\john>cd c:\
 
-注意：windows当中不会区分一个目录/文件名的大小写。所以 `C:\` 和 `c:\` 代表了一样的路径，但是我们最好在所有场合将同样的目录的大小写情况保持一致。
+Note：windows当中不会区分一个目录/文件名的大小写。所以 `C:\` 和 `c:\` 代表了一样的路径，但是我们最好在所有场合将同样的目录的大小写情况保持一致。
 
 ### `cd` 命令<a id="sec-2-1-5" name="sec-2-1-5"></a>
 
@@ -276,4 +277,62 @@ PS C:\Users\sorrow17>_
 Note：这里的清空命令仅供参考，请在自己的电脑当中安全的文件夹中尝试，造成的其他严重后果后果作者概不负责=。=
 关于通配符的使用，[可以参考wikipedia-通配符](http://zh.wikipedia.org/zh-cn/%E9%80%9A%E9%85%8D%E7%AC%A6)。
 
-### 环境变量 `path`<a id="sec-2-3-6" name="sec-2-3-6"></a>
+## 环境变量 `path`<a id="sec-2-4" name="sec-2-4"></a>
+
+重要的事情要放到后面的说。还记得之前几次出现的那个“上下文目录”么？我们已经知道，working directory是存在于这个“上下文目录”的集合当中的，所以我们才会能直接输入working directory当中的文件名，而不是带上那些文件名之前的目录。但是这并不代表“上下文目录”当中只包含working directory这一种目录。
+
+那么一个很自然的问题就是，这个“上下文目录”大集合的主力军到底是什么呢？答案就是“ `path` ”（读作环境变量写作 `path` ）。
+
+也许很多同学在之前配置各种脚本、编程语言以及系统工具的时候多多少少接触过环境变量 `path` ， `path` 在一个操作系统当中属于一种类似于 “速查手册”的存在，当我们输入一条命令的时候（假想）
+
+```shell
+foo args
+```
+
+会有80%的情况，这个 `foo` 是我们常用的系统工具命令，例如linux系统当中常用的 `grep` 命令（搜索哪些文件当中包含特定的一段话），从我们上面学到的两种运行命令的方式，我们要么是找到这个grep程序（注意，命令就是程序）的路径然后输入绝对路径，要么是 `cd` 到grep所在的目录然后键入grep命令。 由于我们经常使用的系统或者后来安装的工具命令常常散步于系统的各个角落，频繁切换目录的工作势必会大大降低我们的工作效率，而且当这些工具的目录发生变动的时候我们就必须修改我们写好的调用这些命令的程序去适应那些新的目录。。。综合考虑起来操作系统引入了环境变量 `path` 的设计。 `path` 是一个目录的集合，
+当我们的命令 `foo` 既不是一个作为绝对目录的可执行文件，也不是一个位于working directory当中作为相对目录的可执行文件，系统便会在预设好的 `path` 集合当中查找这个程序到底存不存在，如果存在了系统就会执行所查找到的程序，而大多数系统工具程序都存放在 `path` 所包含的目录下。
+
+在windows操作系统中，我们可以通过输入
+
+```shell
+>path
+```
+
+来获得 `path` 的值，在OSX/linux系统当中，我们可以通过输入
+
+```shell
+>echo $path
+```
+
+来获得 `path` 的值。
+例如，我的电脑中执行 `path` 命令会得到如下结果：
+
+```shell
+C:\Users\sorrow17>path
+PATH=D:\ruby213\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Pr
+ogram Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\wind
+ows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowe
+rShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:
+\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files
+(x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Int
+el\Intel(R) Management Engine Components\IPT;C:\Program Files\Lenovo\Bluetooth S
+oftware\;C:\Program Files\Lenovo\Bluetooth Software\syswow64;D:\bin;D:\python;C:
+\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Fi
+les\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Java\jdk1.7.0_60
+\bin;D:\miktex\miktex\bin;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;
+D:\python\Scripts;D:\Graphviz_2.28\bin;C:\Program Files (x86)\Git\cmd;D:\mplayer
+;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Subversion\bin;D:\MinGW\bi
+n;D:\gnuwin32\bin;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\To
+ols\;C:\Program Files (x86)\Subversion\bin;
+```
+
+至此，我们完成了对命令行当中一些基本的概念的介绍。
+
+# 参考资料<a id="sec-3" name="sec-3"></a>
+
+这篇教程只是对命令行中的基本概念做一些正规的介绍，下面是一些比较有趣的参考资料：
+
+-   [Command Line Crash-一个命令行快速教程](http://cli.learncodethehardway.org/book/)
+-   [Windows Command Prompt in 15 Minutes](http://www.cs.princeton.edu/courses/archive/spr05/cos126/cmd-prompt.html)
+-   [Learning the linux shell](http://linuxcommand.org/learning_the_shell.php)
+-   [Introduction to the Mac OS X Command Line](http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line)
